@@ -1,0 +1,62 @@
+<div class="kontakt_container">
+<?php
+
+$this->headTitle($this->page->GetTitle());
+$this->headMeta()->appendName('keywords', $this->page->GetKeywords());
+$this->headMeta()->appendName('description', $this->page->GetDescription() );
+echo $this->page->GetContent();
+
+
+$form = $this->form;
+$form->prepare();
+
+
+$formLabel=$this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+<div class="form_element">
+<?php
+
+   $name = $form->get('name');
+    echo $formLabel->openTag($name) . $this->translate($name->getOption('label')).$formLabel->closeTag();
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+
+<div class="form_element">
+<?php
+//echo $this->formLabel($form->get('email') , $this->formElement($form->get('email')) ,'prepend');
+    $email = $form->get('email');
+    echo $formLabel->openTag($email) . $this->translate($email->getOption('label')).$formLabel->closeTag();
+    echo $this->formElement($email);
+    echo $this->formElementErrors($email);
+?></div>
+
+<div class="form_element">
+<?php
+    $message = $form->get('message');
+    echo $formLabel->openTag($message) . $this->translate($message->getOption('label')).$formLabel->closeTag();
+    echo $this->formElement($message);
+    echo $this->formElementErrors($message);
+?></div>
+
+<div class="form_element element_captcha">
+<?php
+   /* $captcha = $form->get('captcha');
+    echo $formLabel->openTag($captcha) . $this->translate($captcha->getOption('label')).$formLabel->closeTag();
+    echo $this->formCaptcha($captcha);
+    echo $this->formElementErrors($captcha);*/
+?>
+</div>
+
+<div class="form_button">
+<?php
+    $submit = $form->get('submit');
+    echo $this->formElement($submit);
+?>
+</div>
+<?= $this->formElement($form->get('security')) ?>
+<?= $this->form()->closeTag() ?>
+</div>

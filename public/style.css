@@ -1,0 +1,12 @@
+.kontakt_container{ width:550px; font-size:1rem; padding:10px}
+.kontakt_container label{ display:block}
+.kontakt_container .form_element{padding-bottom:15px}
+.kontakt_container .form_element input{ font-size:1em; width:99%}
+.kontakt_container .form_element textarea{ width:99%; height:6em}
+.kontakt_container .form_button input{ font-size:1em}
+.kontakt_container .element_captcha img{display:block; padding-bottom:8px}
+.kontakt_container .element_captcha input{width:20rem}
+/*errors*/
+.kontakt_container .form_element ul, .kontakt_container .form_element li{padding:0; margin:0; display:block}
+.kontakt_container .form_element li{padding-top:3px; color:red}
+

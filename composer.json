@@ -1,0 +1,49 @@
+{
+    "name": "masterflash-ru/kontakt",
+    "description": "Страница с контактами для системы управления Simba мультиязычная",
+    "type": "Service",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "masterflash",
+        "simba",
+        "zendframework"
+    ],
+    "homepage": "https://masterflash.ru/",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.0",
+        "zendframework/zend-cache": "^2.7",
+        "zendframework/zend-mvc": "^3.0.0",
+        "zendframework/zend-serializer": "^2.5",
+        "zendframework/zend-router": "^3.0",
+        "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
+        "zendframework/zend-inputfilter": "^2.7",
+        "zendframework/zend-i18n": "^2.7",
+        "masterflash-ru/validator_i18n": "^1.0@dev",
+        "masterflash-ru/statpage": "^1.0@dev",
+        "zendframework/zend-form": "^2.10",
+        "zendframework/zend-mail": "^2.8",
+        "masterflash-ru/ado": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kontakt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kontakt\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0-dev",
+            "dev-develop": "1.0.0-dev"
+        },
+        "zf": {
+            "component": "Statpage",
+            "config-provider": "masterflash-ru\\Kontakt\\ConfigProvider"
+        }
+    }
+}
