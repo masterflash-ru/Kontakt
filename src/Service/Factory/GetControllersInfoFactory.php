@@ -1,8 +1,8 @@
 <?php
-namespace Admin\Service\Factory;
+namespace Kontakt\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Admin\Service\GetControllersInfo;
+use Kontakt\Service\GetControllersInfo;
 
 /*
 Фабрика 
@@ -19,9 +19,9 @@ class GetControllersInfoFactory
 
 public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-		$connection=$container->get('ADO\Connection');
+		$config=$container->get('config');
        $Router=$container->get("Application")->getMvcEvent()->getRouter();
-        return new GetControllersInfo($connection,$Router,$options);
+        return new GetControllersInfo($config,$Router,$options);
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Service;
+namespace Kontakt\Service;
 
 /*
 сервис обработки прерывания GetControllersInfoAdmin simba.admin
@@ -12,35 +12,39 @@ class GetControllersInfo
 {
 	protected $Router;
 	protected $options;
-	protected $connection;
+	protected $config;
 	
-    public function __construct($connection,$Router,$options) 
+    public function __construct($config,$Router,$options) 
     {
 		
 		$this->Router=$Router;
 		$this->options=$options;
-		$this->connection=$connection;
-		//\Zend\Debug\Debug::dump(get_class($container->get("Application")  ));
+		$this->config=$config;
     }
     
 	
 	public function GetDescriptors()
 	{
-		//данный модуль содержит только админксие описатели
+		//данный модуль содержит только сайтовские лписатели описатели
 		if ($this->options["name"]) {return [];}
 
-
-		//Линейные таблицы
-		$info["page"]["description"]="Просто страницы";
-		$rs=$this->connection->Execute("select name,url from statpage_text,statpage where page_type=1  and statpage.id=statpage_text.statpage order by name");
+		$info["page"]["description"]="Контакты с формой обратной связи";
 		$rez['name']=[];
 		$rez['url']=[];
-		while (!$rs->EOF)
+		$rez['mvc']=[];
+		//цикл по локалям
+		foreach ($this->config["locale_enable_list"] as $locale)
 			{
-				$url = $this->Router->assemble(["page"=>$rs->Fields->Item["url"]->Value], ['name' => 'page']);
-				$rez["name"][]=$rs->Fields->Item["name"]->Value;
+				if ($locale==$this->config["locale_default"]) {$locale="";}
+				$url = $this->Router->assemble(["locale"=>$locale], ['name' => 'kontakt']);
+				$mvc=[
+						"route"=>"kontakt",
+						'params'=>["locale"=>$locale]
+					];
+				if(empty($locale)) {$locale=" локаль по умолчанию - ".$this->config["locale_default"];}
+				$rez["name"][]="Страница - {$locale}";
+				$rez["mvc"][]= serialize($mvc);
 				$rez["url"][]=$url;
-				$rs->MoveNext();
 			}
 		$info["page"]["urls"]=$rez;
 		

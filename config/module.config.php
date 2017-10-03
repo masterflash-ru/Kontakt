@@ -35,14 +35,12 @@ return [
 			Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,	
         ],
 	],
-/*
 	'service_manager' => [
 			'factories' => [//сервисы-фабрики
-				Service\Kontakt::class => Service\Factory\KontaktFactory::class,
-	
+				Service\GetControllersInfo::class => Service\Factory\GetControllersInfoFactory::class,
 			],
 		],
-*/
+
     'view_manager' => [
         'template_path_stack' => [
             __DIR__ . '/../view',
@@ -73,7 +71,12 @@ return [
        		 ],
     	],
 	],
-	
+
+	//локали сайта - перезаписываются в глобальном конфиге
+	"locale_default"=>"ru_RU",
+	"locale_enable_list"=>["ru_RU"],
+
+
 	//адреса получателей формы обратной связи по умолчанию
 	//переопределите этот параметр в global.php, он заменит текущий
 	"admin_emails"=>["sxq@yandex.ru"],
