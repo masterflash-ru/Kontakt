@@ -38,9 +38,9 @@ public function GetControllersInfoAdmin(Event $event)
 {
 	$name=$event->getParam("name",NULL);
 	$container=$event->getParam("container",NULL);
-	
+	$locale=$event->getParam("locale",NULL);
 	//сервис который будет возвращать
-	$service=$container->build(GetControllersInfo::class,["name"=>$name]);
+	$service=$container->build(GetControllersInfo::class,["name"=>$name,"locale"=>$locale]);
 	return $service->GetDescriptors();
 }
 
