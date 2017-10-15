@@ -32,18 +32,10 @@ public function __construct ($config,$translator,$validatortranslator)
 
 public function indexAction()
 {
-	$locale=$this->params('locale',NULL);
+	$locale=$this->params('locale',$this->config["locale_default"]);
 	
 	try
 	{
-		//получим дефолтную локаль, что бы проверить передана ли она в URL
-		//это нужно для исключения дубляжей URL
-		$default_locale=$this->config["locale_default"];	//разрешенные локали
-		
-		if ($locale && $this->isMultiLocale() && $default_locale==$locale) {throw new Exception("Запрещено использовать в URL локаль, которая установлена по умолчанию, для исключения дубляжей URL");}
-		if ($locale && !$this->isMultiLocale()) {throw new Exception("Запрещено использовать в URL локаль для моноязычного сайта");}
-
-		if (empty($locale)) {$locale=$default_locale;}
 		//переключим транслятор на нужную локаль
 		$this->translator->setLocale($locale);
 		
@@ -112,18 +104,5 @@ public function indexAction()
 		}
 }
 
-
-	
-/*мультиязычность разрешена?
-возвращает true|false
-если опция "locale_enable_list" массив больше 1 элемента, то мультиязычность ДА
-*/  
-protected function isMultiLocale()
-{
-	if (!isset($this->config["locale_enable_list"])) {return false;}
-	if (isset($this->config["locale_enable_list"]) && is_array($this->config["locale_enable_list"]) 
-		&& count($this->config["locale_enable_list"])>1) {return true;}
-	return false;
-}
 
 }

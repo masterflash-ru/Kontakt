@@ -27,7 +27,7 @@ class GetControllersInfo
 	{
 		//данный модуль содержит только сайтовские лписатели описатели
 		if ($this->options["name"]) {return [];}
-		if (!isset($this->options["locale"])) {$this->options["locale"]=$this->config["locale_default"];}
+
 
 		$info["page"]["description"]="Контакты с формой обратной связи";
 		$rez['name']=[];
@@ -35,14 +35,14 @@ class GetControllersInfo
 		$rez['mvc']=[];
 
 		$locale=$this->options["locale"];
+		if (!isset($this->options["locale"])) {$this->options["locale"]=$this->config["locale_default"];}
 
-		if ($locale==$this->config["locale_default"]) {$locale="";}
-		$url = $this->Router->assemble(["locale"=>$locale], ['name' => 'kontakt']);
+		$url = $this->Router->assemble([], ['name' => 'kontakt_'.$locale]);
 				$mvc=[
-						"route"=>"kontakt",
-						'params'=>["locale"=>$locale]
+						"route"=>"kontakt_".$locale,
+						'params'=>[]
 					];
-		if(empty($locale)) {$locale=" локаль по умолчанию - ".$this->config["locale_default"];}
+		if($locale==$this->config["locale_default"]) {$locale=" локаль по умолчанию - ".$this->config["locale_default"];}
 		$rez["name"][]="Страница - {$locale}";
 		$rez["mvc"][]= serialize($mvc);
 		$rez["url"][]=$url;

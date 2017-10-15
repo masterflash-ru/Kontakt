@@ -9,27 +9,7 @@ use Zend\Router\Http\Segment;
 
 /*
  для работы с мультиязычными сайтами, дополните в глобальной конфигурации новые маршруты по примеру:
- 
-    'router' => [
-        'routes' => [
-			//маршрут для варианта с одним языком
-            'kontakt' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route'    => '/en_US/kontakt',
-					'constraints' => [
-                               	'locale' => '[a-zA-Z_]+',
-                    ],
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
-						'locale'	=>	'en_US'
-                    ],
-                ],
-			],
-	    ],
-    ],
- 
+
 */
 
 return [
@@ -37,7 +17,7 @@ return [
     'router' => [
         'routes' => [
 			//маршрут для варианта с одним языком
-            'kontakt' => [
+            'kontakt_ru_RU' => [
                 'type' => Segment::class,
                 'options' => [
                     'route'    => '/kontakt',
@@ -47,6 +27,7 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'     => 'index',
+						'locale'	=> 'ru_RU'
                     ],
                 ],
 			],
