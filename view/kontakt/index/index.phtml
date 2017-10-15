@@ -1,10 +1,7 @@
 <div class="kontakt_container">
 <?php
-
-$this->headTitle($this->page->GetTitle());
-$this->headMeta()->appendName('keywords', $this->page->GetKeywords());
-$this->headMeta()->appendName('description', $this->page->GetDescription() );
-echo $this->page->GetContent();
+/*вывести страницу KONTAKT + заполнить СЕО из этой страницы*/
+	echo $this->statpage('KONTAKT',$this->locale,2,true);
 
 
 $form = $this->form;

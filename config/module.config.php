@@ -6,8 +6,31 @@
 namespace Kontakt;
 
 use Zend\Router\Http\Segment;
-use Zend\Router\Http\Literal;
 
+/*
+ для работы с мультиязычными сайтами, дополните в глобальной конфигурации новые маршруты по примеру:
+ 
+    'router' => [
+        'routes' => [
+			//маршрут для варианта с одним языком
+            'kontakt' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/en_US/kontakt',
+					'constraints' => [
+                               	'locale' => '[a-zA-Z_]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'index',
+						'locale'	=>	'en_US'
+                    ],
+                ],
+			],
+	    ],
+    ],
+ 
+*/
 
 return [
 	//маршруты
@@ -17,9 +40,9 @@ return [
             'kontakt' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route'    => '[/:locale]/kontakt',
+                    'route'    => '/kontakt',
 					'constraints' => [
-                               			 'locale' => '[a-zA-Z_]+',
+                               	'locale' => '[a-zA-Z_]+',
                     ],
                     'defaults' => [
                         'controller' => Controller\IndexController::class,

@@ -17,13 +17,13 @@ use Zend\Mail;
 
 class IndexController extends AbstractActionController
 {
-	protected $statpage_service;
+
 	protected $config;
 	protected $translator;
 
-public function __construct ($statpage_service,$config,$translator,$validatortranslator)
+public function __construct ($config,$translator,$validatortranslator)
 	{
-		$this->statpage_service=$statpage_service;
+
 		$this->config=$config;
 		$this->translator=$translator;
 		$this->validatortranslator=$validatortranslator;
@@ -38,20 +38,14 @@ public function indexAction()
 	{
 		//получим дефолтную локаль, что бы проверить передана ли она в URL
 		//это нужно для исключения дубляжей URL
-		$default_locale=$this->statpage_service->GetDefaultLocale();	//разрешенные локали
+		$default_locale=$this->config["locale_default"];	//разрешенные локали
 		
-		if ($locale && $this->statpage_service->isMultiLocale() && $default_locale==$locale) {throw new Exception("Запрещено использовать в URL локаль, которая установлена по умолчанию, для исключения дубляжей URL");}
-		if ($locale && !$this->statpage_service->isMultiLocale()) {throw new Exception("Запрещено использовать в URL локаль для моноязычного сайта");}
+		if ($locale && $this->isMultiLocale() && $default_locale==$locale) {throw new Exception("Запрещено использовать в URL локаль, которая установлена по умолчанию, для исключения дубляжей URL");}
+		if ($locale && !$this->isMultiLocale()) {throw new Exception("Запрещено использовать в URL локаль для моноязычного сайта");}
 
-		$this->statpage_service->SetLocale($locale);					//новая локаль
-		$this->statpage_service->SetPageType(Statpage::SPECIAL);		//внутренние
-		$page=$this->statpage_service->LoadFromSysname("KONTAKT");		//URL страницы (транслит имени)
-		
-		if  ($page->getTpl()) {$view->setTemplate($page->getTpl()) ;}	//вероятно бесполезна, т.к. после обработки формы, переходим на ok.phtml шаблон
-
-
+		if (empty($locale)) {$locale=$default_locale;}
 		//переключим транслятор на нужную локаль
-		$this->translator->setLocale($this->statpage_service->getLocale());
+		$this->translator->setLocale($locale);
 		
 		//форма
 		//здесь создаем капчу исходя из настроек 
@@ -107,7 +101,7 @@ public function indexAction()
 			}		
 		
 		//вывод страницы и формы
-		$view->setVariables(["page"=>$page,"form"=>$form]);
+		$view->setVariables(["locale"=>$locale,"form"=>$form]);
 		$_SESSION["_kontakt_form_"]=time();
 		return $view;
 	}
@@ -118,5 +112,18 @@ public function indexAction()
 		}
 }
 
+
+	
+/*мультиязычность разрешена?
+возвращает true|false
+если опция "locale_enable_list" массив больше 1 элемента, то мультиязычность ДА
+*/  
+protected function isMultiLocale()
+{
+	if (!isset($this->config["locale_enable_list"])) {return false;}
+	if (isset($this->config["locale_enable_list"]) && is_array($this->config["locale_enable_list"]) 
+		&& count($this->config["locale_enable_list"])>1) {return true;}
+	return false;
+}
 
 }
