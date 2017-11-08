@@ -20,11 +20,11 @@
         "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
         "zendframework/zend-inputfilter": "^2.7",
         "zendframework/zend-i18n": "^2.7",
-        "masterflash-ru/validator_i18n": "^1.0",
-        "masterflash-ru/statpage": "^1.0",
+        "masterflash-ru/validator_i18n": "*",
+        "masterflash-ru/statpage": "*",
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-mail": "^2.8",
-        "masterflash-ru/ado": "^1.0"
+        "masterflash-ru/ado": "*"
     },
     "autoload": {
         "psr-4": {
@@ -38,8 +38,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.0-dev",
-            "dev-develop": "1.1.0-dev"
+            "dev-master": "1.1-dev",
+            "dev-develop": "1.1-dev"
         },
         "zf": {
             "component": "Statpage",

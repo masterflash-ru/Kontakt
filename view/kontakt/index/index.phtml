@@ -1,11 +1,13 @@
-<?=$this->statpage('KONTAKT',
-                    [
-                        "locale"=>$this->locale,
-                        "type"=>2,
-                        "seo"=>true
-                    ]);?>
 <div class="kontakt_container">
 <?php
+/*вывести страницу KONTAKT + заполнить СЕО из этой страницы*/
+	echo $this->statpage('KONTAKT',
+                         [
+                            "locale"=>$this->locale,
+                            "type"=>2,
+                            "seo"=>true
+                        ]);
+
 
 $form = $this->form;
 $form->prepare();
