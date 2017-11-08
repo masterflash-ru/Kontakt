@@ -41,7 +41,7 @@ public function __construct($captcha,$translator)
                'label' => 'Email',
             ],
             'attributes' => [                
-                'placeholder'=>'Email',
+               // 'placeholder'=>'Email',
             ],
 
         ]);
@@ -53,7 +53,7 @@ public function __construct($captcha,$translator)
                 'label' => 'Ваше имя',
             ],
             'attributes' => [                
-                'placeholder'=>'Ваше имя',
+               // 'placeholder'=>'Ваше имя',
             ],
 
         ]);
@@ -65,12 +65,12 @@ public function __construct($captcha,$translator)
                 'label' => 'Сообщение',
             ],
             'attributes' => [                
-                'placeholder'=>'Сообщение',
+               // 'placeholder'=>'Сообщение',
             ],
 
         ]);
        
-		/* $this->add([
+		 $this->add([
 					'type' =>"Captcha",
 					'name' => 'captcha',
 					'options' => [
@@ -80,7 +80,7 @@ public function __construct($captcha,$translator)
 					'attributes' => [                
 						'placeholder'=>'Символы с картинки',
 					],
-				]);*/
+				]);
 
         $this->add([
             'type'  => 'submit',
