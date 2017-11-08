@@ -1,4 +1,4 @@
-<div class="kontakt_container">
+
 <?php
 /*вывести страницу KONTAKT + заполнить СЕО из этой страницы*/
 	echo $this->statpage('KONTAKT',
@@ -7,8 +7,9 @@
                             "type"=>2,
                             "seo"=>true
                         ]);
-
-
+?>
+<div class="kontakt_container">
+<?php
 $form = $this->form;
 $form->prepare();
 
