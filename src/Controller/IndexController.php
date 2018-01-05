@@ -33,7 +33,7 @@ public function __construct ($config,$translator,$validatortranslator)
 public function indexAction()
 {
 	$locale=$this->params('locale',$this->config["locale_default"]);
-	
+	$default_locale=$this->config["locale_default"];
 	try
 	{
 		//переключим транслятор на нужную локаль
@@ -58,7 +58,7 @@ public function indexAction()
 						if ($_SERVER["REQUEST_TIME"]-$_SESSION["_kontakt_form_"] > 0)
 							{
 								$mess="Сообщение с сайта:\n\n". $info['message'].
-							        "\n Имя: ". $info['name'].
+							       // "\n Имя: ". $info['name'].
 							        "\n E_mail: ".$info['email'];
 								//отправляем на почту сообщение
 								  if (mb_strpos($mess,"://",0,"UTF-8")===false)
@@ -74,12 +74,12 @@ public function indexAction()
 												$transport->send($mail);
 											}							
 							}
-						$this->flashMessenger()->addMessage("Сообщение успешно отправлено");
+						$this->flashMessenger()->addMessage("<h1>Сообщение успешно отправлено</h1>");
 						if ($default_locale!=$locale) 
 							{
-								return $this->redirect()->toRoute('kontakt',["locale"=>$locale]);
+								return $this->redirect()->toRoute('kontakt_ru_RU',["locale"=>$locale]);
 							} 
-						return $this->redirect()->toRoute('kontakt');
+						return $this->redirect()->toRoute('kontakt_ru_RU');
 					}
 			}
 		
@@ -87,7 +87,7 @@ public function indexAction()
 		$flashMessenger = $this->flashMessenger();
 		if ($flashMessenger->hasMessages()) 
 			{
-				$view->setVariables(["page"=>$page,"message"=>implode("",$flashMessenger->getMessages())]);
+				$view->setVariables(["message"=>implode("",$flashMessenger->getMessages())]);
 				$view->setTemplate("kontakt/index/ok.phtml");
 				return $view;
 			}		

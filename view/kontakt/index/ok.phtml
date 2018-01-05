@@ -1,8 +1,9 @@
 <?php
-
-$this->headTitle($this->page->GetTitle());
-$this->headMeta()->appendName('keywords', $this->page->GetKeywords());
-$this->headMeta()->appendName('description', $this->page->GetDescription() );
-echo $this->page->GetContent();
 echo $this->translate($this->message);
+echo $this->statpage('KONTAKT',
+                    [
+                        "locale"=>"ru_RU",
+                        "type"=>2,
+                        "seo"=>true
+                    ]);
 ?>

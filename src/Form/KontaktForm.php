@@ -41,22 +41,22 @@ public function __construct($captcha,$translator)
                'label' => 'Email',
             ],
             'attributes' => [                
-               // 'placeholder'=>'Email',
+              //  'placeholder'=>'Email',
             ],
 
         ]);
         
-        $this->add([            
+     /*   $this->add([            
             'type'  => 'text',
             'name' => 'name',
             'options' => [
                 'label' => 'Ваше имя',
             ],
             'attributes' => [                
-               // 'placeholder'=>'Ваше имя',
+              //  'placeholder'=>'Ваше имя',
             ],
 
-        ]);
+        ]);*/
         
         $this->add([            
             'type'  => 'textarea',
@@ -65,7 +65,7 @@ public function __construct($captcha,$translator)
                 'label' => 'Сообщение',
             ],
             'attributes' => [                
-               // 'placeholder'=>'Сообщение',
+              //  'placeholder'=>'Сообщение',
             ],
 
         ]);
@@ -121,14 +121,14 @@ public function __construct($captcha,$translator)
             ]);                     
         
 		//имя
-        $inputFilter->add([
+      /*  $inputFilter->add([
                 'name'     => 'name',	//соответсвует имени элемента
                 'required' => true,
                 'filters'  => [
                     ['name' => 'StringTrim'],  
 					['name' => 'StripTags'],                 
                 ],                
-            ]);                     
+            ]);  */                   
     
 	        $inputFilter->add([
                 'name'     => 'message',	//соответсвует имени элемента
