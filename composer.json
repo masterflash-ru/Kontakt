@@ -24,7 +24,8 @@
         "masterflash-ru/statpage": "*",
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-mail": "^2.8",
-        "masterflash-ru/ado": "*"
+        "masterflash-ru/ado": "*",
+		"zendframework/zendservice-recaptcha": "^3.0"
     },
     "autoload": {
         "psr-4": {
