@@ -4,13 +4,12 @@
 
  */
 
-namespace Kontakt\Controller;
+namespace Mf\Kontakt\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Exception;
-use Statpage\Service\Statpage;
-use Kontakt\Form\KontaktForm;
+use Mf\Kontakt\Form\KontaktForm;
 use Zend\Captcha;
 use Zend\Mail;
 use Zend\Http\PhpEnvironment\Response;

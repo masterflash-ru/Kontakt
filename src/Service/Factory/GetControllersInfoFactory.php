@@ -1,8 +1,8 @@
 <?php
-namespace Kontakt\Service\Factory;
+namespace Mf\Kontakt\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Kontakt\Service\GetControllersInfo;
+
 
 /*
 Фабрика 
@@ -21,7 +21,7 @@ public function __invoke(ContainerInterface $container, $requestedName, array $o
     {
 		$config=$container->get('config');
        $Router=$container->get("Application")->getMvcEvent()->getRouter();
-        return new GetControllersInfo($config,$Router,$options);
+        return new $requestedName($config,$Router,$options);
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-namespace Kontakt\Service;
+namespace Mf\Kontakt\Service;
 
 /*
 сервис обработки прерывания GetControllersInfoAdmin simba.admin

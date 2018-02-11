@@ -2,12 +2,12 @@
 /**
  */
 
-namespace Kontakt;
+namespace Mf\Kontakt;
 
 use Zend\Mvc\MvcEvent;
 use Zend\EventManager\Event;
 
-use Kontakt\Service\GetControllersInfo;
+use Mf\Kontakt\Service\GetControllersInfo;
 
 class Module
 {

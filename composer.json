@@ -31,12 +31,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Kontakt\\": "src/"
+            "Mf\\Kontakt\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Kontakt\\": "src/"
+            "Mf\\Kontakt\\": "src/"
         }
     },
     "extra": {
@@ -45,8 +45,8 @@
             "dev-develop": "1.1-dev"
         },
         "zf": {
-            "component": "Statpage",
-            "config-provider": "masterflash-ru\\Kontakt\\ConfigProvider"
+            "component": "Mf\\Kontakt",
+            "config-provider": "masterflash-ru\\Mf\\Kontakt\\ConfigProvider"
         }
     }
 }

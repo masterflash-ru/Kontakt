@@ -3,7 +3,7 @@
 работа с контактами
  */
 
-namespace Kontakt;
+namespace Mf\Kontakt;
 
 use Zend\Router\Http\Segment;
 
