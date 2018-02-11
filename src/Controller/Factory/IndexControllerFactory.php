@@ -13,13 +13,13 @@ use Zend\Validator\Translator\TranslatorInterface as ValidatorTranslatorInterfac
  */
 class IndexControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+  public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
 
-		$config = $container->get('Config');
-		$translator = $container->get(TranslatorInterface::class);
-		$validatortranslator = $container->get(ValidatorTranslatorInterface::class);
-		return new $requestedName($config,$translator,$validatortranslator);
+    $config = $container->get('Config');
+    $translator = $container->get(TranslatorInterface::class);
+    $validatortranslator = $container->get(ValidatorTranslatorInterface::class);
+    return new $requestedName($config,$translator,$validatortranslator);
     }
 
 }
