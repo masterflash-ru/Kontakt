@@ -52,29 +52,6 @@ return [
     ],
 
 
-  'translator' => [
-      'locale' => 'ru_RU',
-      'translation_file_patterns' => [
-          [
-            'type'     => 'phparray',
-            'base_dir' => __DIR__ . '/../locale',
-            'pattern'  => '%s/messages.php',
-          ],
-      ],
-  ],
-
-
-  'validator_translator' => [
-    //'locale' => 'ru_RU',                  //можно не указывать, если есть стандартный переводчик с настройками
-    'translation_file_patterns' => [
-            [
-              'type'     => 'phparray',
-              'base_dir' => __DIR__ . '/../locale',
-              'pattern'  => '%s/validate_messages.php',
-            ],
-    ],
-  ],
-
   //локали сайта - перезаписываются в глобальном конфиге
   "locale_default"=>"ru_RU",
   "locale_enable_list"=>["ru_RU"],

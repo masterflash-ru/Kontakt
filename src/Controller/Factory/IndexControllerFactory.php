@@ -4,10 +4,8 @@ namespace Mf\Kontakt\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+use Zend\Validator\Translator\TranslatorInterface;
 
-
-use Zend\I18n\Translator\TranslatorInterface;
-use Zend\Validator\Translator\TranslatorInterface as ValidatorTranslatorInterface;
 
 /**
  */
@@ -18,8 +16,7 @@ class IndexControllerFactory implements FactoryInterface
 
     $config = $container->get('Config');
     $translator = $container->get(TranslatorInterface::class);
-    $validatortranslator = $container->get(ValidatorTranslatorInterface::class);
-    return new $requestedName($config,$translator,$validatortranslator);
+    return new $requestedName($config,$translator);
     }
 
 }

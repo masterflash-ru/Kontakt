@@ -13,7 +13,7 @@ use Mf\Kontakt\Form\KontaktForm;
 use Zend\Captcha;
 use Zend\Mail;
 use Zend\Http\PhpEnvironment\Response;
-
+use Locale;
 
 class IndexController extends AbstractActionController
 {
@@ -21,12 +21,11 @@ class IndexController extends AbstractActionController
     protected $config;
     protected $translator;
 
-public function __construct ($config,$translator,$validatortranslator)
+public function __construct ($config,$translator)
 {
 
     $this->config=$config;
     $this->translator=$translator;
-    $this->validatortranslator=$validatortranslator;
 }
 
 
@@ -43,7 +42,7 @@ public function indexAction()
     }
 
     //переключим транслятор на нужную локаль
-    $this->translator->setLocale($locale);
+    $this->translator->setLocale(Locale::getPrimaryLanguage($locale));
 
     $view=new ViewModel();
     //форма
@@ -52,7 +51,7 @@ public function indexAction()
     $adapter= "\\".$this->config["captcha"]["adapter"];
     $captcha=new $adapter($options);
 
-    $form = new KontaktForm($captcha,$this->validatortranslator);
+    $form = new KontaktForm($captcha,$this->translator);
     
     if ($prg === false){
       //вывод страницы и формы
