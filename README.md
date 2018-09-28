@@ -8,3 +8,43 @@
 
 Установка
 composer require masterflash-ru/kontakt
+
+Конфигурация полей хранится config/forma.config.php, при необходимости вы можете добавить новые поля. Важно имена captcha, submit, security не менять.
+Все поля просто отправляются на почту, подписи полей берутся из меток.
+
+
+для мультиязычных сайтов все готово для работы, и как правило не требуется измнений:
+1 - добавить маршрут по аналогии с дефолтным, например,
+```php
+            'kontakt_en_US' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/en/kontakt',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'    => 'index',
+                        'locale'    => 'en_US'
+                    ],
+                ],
+            ],
+```
+2 - добавить в конфиг приложения секцию транслятора, наподобие:
+```php
+  'translator' => [
+    'locale' => 'en_US',
+    'translation_file_patterns' => [
+        [
+            'type'     => 'phparray',
+            'base_dir' => __DIR__ .  '/../locale',
+            'pattern'  => '%s.php',
+        ],
+    ],
+  ],
+```
+3 - добавить языковой перевод в файл, например, en_US.php, наподобие:
+```php
+return [
+  "Ваш email адрес"=>"Your email address",
+  
+];
+```

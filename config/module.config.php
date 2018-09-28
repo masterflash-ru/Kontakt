@@ -16,14 +16,12 @@ return [
     //маршруты
     'router' => [
         'routes' => [
-        //маршрут для варианта с одним языком
+        /*маршрут для варианта с одним языком
+        для других языков добавьте маршруты по аналогии в конфиге вашего приложения*/
             'kontakt_ru_RU' => [
                 'type' => Segment::class,
                 'options' => [
                     'route'    => '/kontakt',
-                    'constraints' => [
-                          'locale' => '[a-zA-Z_]+',
-                    ],
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'    => 'index',
@@ -33,14 +31,13 @@ return [
             ],
       ],
     ],
-    //контроллеры
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         ],
     ],
     'service_manager' => [
-        'factories' => [//сервисы-фабрики
+        'factories' => [
           Service\GetControllersInfo::class => Service\Factory\GetControllersInfoFactory::class,
         ],
     ],
@@ -51,6 +48,15 @@ return [
         ],
     ],
 
+  "kontakt"=>[
+      /*шаблоны вывода контактов с формой обратной связи*/
+      "tpl"=>[
+          "index"=>"kontakt/index/index",
+          "ok"=>"kontakt/index/ok"
+      ],
+      /*конфигурация формы обратной связи*/
+      "forma"=>__DIR__."/forma.kontakt.config.php",
+  ],
 
   //локали сайта - перезаписываются в глобальном конфиге
   "locale_default"=>"ru_RU",
@@ -62,5 +68,6 @@ return [
   "admin_emails"=>["sxq@yandex.ru"],
   //обратный адрес
   "email_robot"=>"robot@".trim($_SERVER["SERVER_NAME"],"w."),
+    
 
 ];

@@ -1,0 +1,38 @@
+<?php
+/*вывести страницу KONTAKT + заполнить СЕО из этой страницы*/
+	echo $this->statpage('KONTAKT',
+                         [
+                            "locale"=>$this->locale,
+                            "type"=>2,
+                            "seo"=>true
+                        ]);
+?>
+<div class="kontakt_container">
+<?php
+$form = $this->form;
+$form->prepare();
+
+echo $this->form()->openTag($form);
+foreach ($form as $k=>$item){
+    if (!in_array($k,['captcha','security',"submit"])){
+    ?>
+    <div class="form_element">
+    <?= $this->formRow($form->get($k)) ?>
+    </div>
+    <?php
+    }
+}
+?>
+<div class="form_element element_captcha">
+<?php
+    if ($form->has('captcha')){
+        echo $this->formCaptcha($form->get('captcha'));
+        echo $this->formElementErrors($form->get('captcha'));
+    }
+?>
+</div>
+
+<div class="form_button"><?=$this->formElement($form->get('submit'));?></div>
+<?= $this->formElement($form->get('security')) ?>
+<?= $this->form()->closeTag() ?>
+</div>

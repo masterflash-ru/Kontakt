@@ -9,30 +9,43 @@ namespace Mf\Kontakt\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Exception;
-use Mf\Kontakt\Form\KontaktForm;
+//use Mf\Kontakt\Form\KontaktForm;
 use Zend\Captcha;
 use Zend\Mail;
 use Zend\Http\PhpEnvironment\Response;
 use Locale;
+use Zend\Form\Factory;
+use Zend\Validator\AbstractValidator;
 
 class IndexController extends AbstractActionController
 {
 
     protected $config;
     protected $translator;
+    protected $captcha;
+    protected $locale_default;
+    protected $email_robot;
+    protected $admin_emails=[];
 
 public function __construct ($config,$translator)
 {
 
-    $this->config=$config;
+    $this->config=$config["kontakt"];
     $this->translator=$translator;
+    $options=$config["captcha"]["options"][$config["captcha"]["adapter"]];
+    $captcha= "\\".$config["captcha"]["adapter"];
+    $this->captcha=new $captcha($options);
+    AbstractValidator::setDefaultTranslator($translator);
+    $this->locale_default=$config["locale_default"];
+    $this->email_robot=$config["email_robot"];
+    $this->admin_emails=$config["admin_emails"];
 }
 
 
 public function indexAction()
 {
-  $locale=$this->params('locale',$this->config["locale_default"]);
-  $default_locale=$this->config["locale_default"];
+  $locale=$this->params('locale',$this->locale_default);
+
   try {
 
     $prg = $this->prg();
@@ -45,13 +58,14 @@ public function indexAction()
     $this->translator->setLocale(Locale::getPrimaryLanguage($locale));
 
     $view=new ViewModel();
-    //форма
-    //здесь создаем капчу исходя из настроек 
-    $options=$this->config["captcha"]["options"][$this->config["captcha"]["adapter"]];
-    $adapter= "\\".$this->config["captcha"]["adapter"];
-    $captcha=new $adapter($options);
-
-    $form = new KontaktForm($captcha,$this->translator);
+    $view->setTemplate($this->config["tpl"]["index"]);
+    
+    $factory = new Factory();
+    $form    = $factory->createForm(include $this->config["forma"]);
+    if ($form->has("captcha")){
+        /*здесь создаем капчу исходя из настроек и перезаписываем в конфиг*/
+        $form->get("captcha")->setCaptcha($this->captcha);
+    }
     
     if ($prg === false){
       //вывод страницы и формы
@@ -65,25 +79,28 @@ public function indexAction()
     if ($form->isValid()) {
         //данные в норме
         $info=$form->getData();
-        if ($_SERVER["REQUEST_TIME"]-$_SESSION["_kontakt_form_"] > 0) {
-            $mess="Сообщение с сайта:\n\n". $info['message'].
-            // "\n Имя: ". $info['name'].
-            "\n E_mail: ".$info['email'];
+        if ($_SERVER["REQUEST_TIME"]-$_SESSION["_kontakt_form_"] > 10) {
+            $mess="Сообщение с сайта:\n\n";
+            foreach ($form as $k=>$f){
+                if (in_array($k,['captcha','security',"submit"])){continue;}
+                $mess.=$f->getLabel();
+                $mess.=": ".$info[$f->getName()];
+                $mess.= "<br>\n";
+            }
             //отправляем на почту сообщение, запрещаем пересылать URL
             if (mb_strpos($mess,"://",0,"UTF-8")===false){
                 $mail = new Mail\Message();
                 $mail->setEncoding("UTF-8");
                 $mail->setBody($mess);
-                $mail->setFrom($this->config["email_robot"]);
-                $mail->addTo($this->config["admin_emails"]);
+                $mail->setFrom($this->email_robot);
+                $mail->addTo($this->admin_emails);
                 $mail->setSubject("Сообщение с сайта (из контактов) ".$_SERVER["SERVER_NAME"]);
                 $transport = new Mail\Transport\Sendmail();
                 $transport->send($mail);
             }
         }
         
-        $view->setVariables(["message"=>"<h1>Сообщение успешно отправлено</h1>"]);
-        $view->setTemplate("kontakt/index/ok.phtml");
+        $view->setTemplate($this->config["tpl"]["ok"]);
     }
 
     $view->setVariables(["locale"=>$locale,"form"=>$form]);
