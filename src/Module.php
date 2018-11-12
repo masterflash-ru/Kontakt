@@ -8,9 +8,11 @@ use Zend\Mvc\MvcEvent;
 use Zend\EventManager\Event;
 
 use Mf\Kontakt\Service\GetControllersInfo;
+use Mf\Kontakt\Service\GetMap;
 
 class Module
 {
+    protected $ServiceManager;
 
 public function getConfig()
     {
@@ -20,10 +22,14 @@ public function getConfig()
 
 public function onBootstrap(MvcEvent $event)
 {
+    $this->ServiceManager=$event->getApplication()-> getServiceManager();
 	$eventManager = $event->getApplication()->getEventManager();
     $sharedEventManager = $eventManager->getSharedManager();
     // объявление слушателя для проверки авторизации админа 
 	$sharedEventManager->attach("simba.admin", "GetControllersInfoAdmin", [$this, 'GetControllersInfoAdmin']);
+    //слушатель для генерации карты сайта
+    $sharedEventManager->attach("simba.sitemap", "GetMap", [$this, 'GetMap']);
+
 }
 
 
@@ -42,6 +48,19 @@ public function GetControllersInfoAdmin(Event $event)
 	//сервис который будет возвращать
 	$service=$container->build(GetControllersInfo::class,["name"=>$name,"locale"=>$locale]);
 	return $service->GetDescriptors();
+}
+
+/**
+*обработчик события GetMap - получение карты сайта
+*/
+public function GetMap(Event $event)
+{
+    $type=$event->getParam("type",NULL);
+    $name=$event->getParam("name",NULL);
+    $locale=$event->getParam("locale",NULL);
+    //сервис который будет возвращать карту
+    $service=$this->ServiceManager->build(GetMap::class,["type"=>$type,"locale"=>$locale,"name"=>$name]);
+    return $service->GetMap();
 }
 
 }

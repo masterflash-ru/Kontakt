@@ -38,7 +38,9 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-          Service\GetControllersInfo::class => Service\Factory\GetControllersInfoFactory::class,
+            Service\GetControllersInfo::class => Service\Factory\GetControllersInfoFactory::class,
+            Service\GetMap::class => Service\Factory\GetMapFactory::class,
+
         ],
     ],
 
