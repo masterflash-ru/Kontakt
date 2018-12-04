@@ -23,7 +23,6 @@
         "masterflash-ru/statpage": "^1.0",
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-mail": "^2.8",
-        "masterflash-ru/ado": "^1.0",
         "zendframework/zend-captcha": "^2.7",
         "zendframework/zendservice-recaptcha": "^3.0",
         "zendframework/zend-mvc-plugin-prg": "^1.0"
