@@ -60,6 +60,9 @@ public function indexAction()
     $view=new ViewModel();
     $view->setTemplate($this->config["tpl"]["index"]);
     
+    /*если у нас AJAX запрос, отключим вывод макета*/
+    $view->setTerminal($this->getRequest()->isXmlHttpRequest());
+    
     $factory = new Factory();
     $form    = $factory->createForm(include $this->config["forma"]);
     if ($form->has("captcha")){
