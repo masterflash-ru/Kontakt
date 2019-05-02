@@ -20,7 +20,7 @@
         "zendframework/zend-inputfilter": "^2.7",
         "zendframework/zend-i18n": "^2.7",
         "masterflash-ru/validator_i18n": "^1.0",
-        "masterflash-ru/statpage": "^1.0",
+        "masterflash-ru/statpage": "^2.0",
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-mail": "^2.8",
         "zendframework/zend-captcha": "^2.7",
