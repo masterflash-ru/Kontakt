@@ -22,13 +22,25 @@ public function getConfig()
 
 public function onBootstrap(MvcEvent $event)
 {
-    $this->ServiceManager=$event->getApplication()-> getServiceManager();
+    $ServiceManager=$this->ServiceManager=$event->getApplication()-> getServiceManager();
 	$eventManager = $event->getApplication()->getEventManager();
     $sharedEventManager = $eventManager->getSharedManager();
-    // объявление слушателя для проверки авторизации админа 
-	$sharedEventManager->attach("simba.admin", "GetControllersInfoAdmin", [$this, 'GetControllersInfoAdmin']);
+    //объявление слушателя для получения всех MVC адресов разбитых по языкам
+    $sharedEventManager->attach("simba.admin", "GetMvc", function(Event $event) use ($ServiceManager){
+        $category=$event->getParam("category",NULL);
+        $service=$ServiceManager->build(GetControllersInfo::class,["category"=>$category]);
+        return $service->GetMvc();
+    });
     //слушатель для генерации карты сайта
-    $sharedEventManager->attach("simba.sitemap", "GetMap", [$this, 'GetMap']);
+    $sharedEventManager->attach("simba.sitemap", "GetMap", function(Event $event) use ($ServiceManager){
+        $name=$event->getParam("name",NULL);
+        $type=$event->getParam("type",NULL);
+        $locale=$event->getParam("locale",NULL);
+        $service=$ServiceManager->build(GetMap::class,["name"=>$name,"locale"=>$locale,"type"=>$type]);
+        return $service->GetMap();
+    });
+    // Устарело объявление слушателя для проверки авторизации админа 
+	$sharedEventManager->attach("simba.admin", "GetControllersInfoAdmin", [$this, 'GetControllersInfoAdmin']);
 
 }
 
@@ -50,17 +62,5 @@ public function GetControllersInfoAdmin(Event $event)
 	return $service->GetDescriptors();
 }
 
-/**
-*обработчик события GetMap - получение карты сайта
-*/
-public function GetMap(Event $event)
-{
-    $type=$event->getParam("type",NULL);
-    $name=$event->getParam("name",NULL);
-    $locale=$event->getParam("locale",NULL);
-    //сервис который будет возвращать карту
-    $service=$this->ServiceManager->build(GetMap::class,["type"=>$type,"locale"=>$locale,"name"=>$name]);
-    return $service->GetMap();
-}
 
 }
