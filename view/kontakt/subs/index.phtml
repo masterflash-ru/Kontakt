@@ -1,16 +1,12 @@
-<?php
-/*вывести страницу KONTAKT + заполнить СЕО из этой страницы*/
-echo $this->statpage('KONTAKT',
-                         [
-                            "locale"=>$this->locale,
-                            "type"=>2,
-                            "seo"=>true
-                        ]);
-?>
-<div class="kontakt_container">
+<div id="mysubs">
+    
+
 <?php
 $form = $this->form;
 $form->prepare();
+$form->setAttribute('id', 'formsubs');
+$form->setAttribute('action', $this->url('subs_'.$this->locale));
+/*переопределим формат ошибок*/
 echo $this->form()->openTag($form);
 $formLabel = $this->plugin('formLabel');
 foreach ($form as $k=>$item){
@@ -19,16 +15,17 @@ foreach ($form as $k=>$item){
 
     $error=$i->getMessages();
     if (!empty($error)){$flagError=true;}
-    if ($type=="submit") {
-        //для кнопки не выводим группу
-        echo $this->formSubmit($form->get($k));
-    } elseif ($type=="hidden"){
+    if ($type=="submit"){
+        $align=" text-right";
+    } else {
+        $align="";
+    }
+    if ($type=="hidden"){
         echo $this->FormHidden($i);
     } else {
 
         ?>
-        <div class="form-group">
-
+        <div class="form-group<?=$align?>">
         <?php 
         $item->setAttribute("class","form-control form-control-sm");
         switch ($type){
@@ -46,8 +43,9 @@ foreach ($form as $k=>$item){
                 echo $this->FormCheckbox($i).$this->formLabel($i);
                 break;
             }
-            case "button":{
-                echo $this->FormButton($i);
+            case "submit":{
+                $i->setAttributes(["class"=>"btn btn-primary"]);
+                echo $this->FormSubmit($i);
                 break;
             }
 
@@ -65,3 +63,10 @@ echo $this->form()->closeTag();
     ?>
 
 </div>
+<script type="text/javascript">
+$("#formsubs").on("submit",function(e){
+    e.preventDefault();
+    $(this).ajaxSubmit({target: '#mysubs'});
+});
+
+</script>

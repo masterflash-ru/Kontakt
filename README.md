@@ -3,19 +3,19 @@
 Форма обратной связи просто отправляется на почту менеджеру. Адрес менеджера указывается в config  с ключем admin_emails, в виде массива.
 Обратный адрес хранится в ключе email_robot общего конфига
 
-Стили вывода шаблона контактов находятся в папке public, скопируйте в общий файл стилей приложения.
-Для мультиязычных сайтов все в зачаточном уровне, поэтому пока не работает.
+Как дополнительные опции предоставляет работу всплывающих окон для обратного звонка и подписки на чего-либо
 
 Установка
 composer require masterflash-ru/kontakt
 
-Конфигурация полей хранится config/forma.config.php, при необходимости вы можете добавить новые поля. Важно имена captcha, submit, security не менять.
-Все поля просто отправляются на почту, подписи полей берутся из меток.
+Конфигурация полей хранится config/forma.ХХХХ.config.php, при необходимости вы можете добавить новые поля, указав новый файл с конфигом формы.
+Важно! имена captcha, submit, security не менять.
+Все поля просто отправляются на почту, подписи полей берутся из меток. ХХХХ - имя элемента: kontakt, call, subs
 
 Модуль имеет вызовы для генерации карты сайта sitemap.xml, возвращает информацию для модуля masterflash-ru/sitemap для генерации индексного файла и для самой карты, пока только для ru_RU.
 Принцип поиска маршрутов производится по начальному слову kontakt в имени маршрута.
 
-для мультиязычных сайтов все готово для работы, и как правило не требуется измнений:
+для мультиязычных сайтов все готово для работы, и как правило не требуется измнений (ПОКА НЕ ТЕСТИЛ!!!):
 1 - добавить маршрут по аналогии с дефолтным, например,
 ```php
             'kontakt_en_US' => [
@@ -55,12 +55,77 @@ return [
 Все поля кроме 'captcha','security',"submit" отправляются на почту. Имя поля берется из опции label конфига формы
 ```php
   "kontakt"=>[
-      /*шаблоны вывода контактов с формой обратной связи*/
-      "tpl"=>[
-          "index"=>"kontakt/index/index",
-          "ok"=>"kontakt/index/ok"
+        /*конфиг элементов ленты*/
+        "categories"=>[
+            'kontakt_page' =>[
+                'description'=>'Страница контактов + форма',
+                'tpl' => [
+                    'index' => 'kontakt/index/index',     //шаблон вывода страницы
+                    'ok' => 'kontakt/index/ok',           //шаблон вывода страницы после отправки формы
+                ],
+                'layout' => null,                       //макет вывода, по умолчанию текущий
+                /*конфигурация формы*/
+                "forma"=>__DIR__."/forma.kontakt.config.php",
+            ],
+            'subs' =>[
+                'description'=>'Всплывающее окно для подписок',
+                'tpl' => [
+                    'index' => 'kontakt/subs/index',     //шаблон вывода страницы
+                    'ok' => 'kontakt/subs/ok',           //шаблон вывода страницы после отправки формы
+                ],
+                /*конфигурация формы*/
+                "forma"=>__DIR__."/forma.subs.config.php",
+            ],
+            'call' =>[
+                'description'=>'Всплывающее окно для обратного звонка',
+                'tpl' => [
+                    'index' => 'kontakt/call/index',     //шаблон вывода страницы
+                    'ok' => 'kontakt/call/ok',           //шаблон вывода страницы после отправки формы
+                ],
+                /*конфигурация формы*/
+                "forma"=>__DIR__."/forma.call.config.php",
+            ],
+        ],
+      /*какие элементы разрешено использовать, укажите в конфиге своего приложения */
+      "enables"=>[ 
+          "kontakt_page"=>true,
+          "subs"        =>false,
+          "call"        =>false
       ],
-      /*конфигурация формы обратной связи*/
-      "forma"=>__DIR__."/forma.kontakt.config.php",
   ],
 ```
+
+Сценарий вывода форм использует bootstrap4, при необходимости используйте свои, указав в сценарии имена в формате Zend
+Для работы со всплыващими окнами:
+1 - подключите в макете файл jquery.form.min.js для обрабоки асинхронных запросов
+2 - ипользуйте диалоги bootstrap4:
+```HTML
+<button class="btn btn-primary subs mt-2 btn-sm" data-toggle="modal" data-target="#subsModal">Подписаться на рассылку</button>
+
+
+
+<div class="modal fade" id="subsModal" tabindex="-1" role="dialog" aria-labelledby="SModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <p class="modal-title h5 text-primary" id="exampleModalCenterTitle">Подписаться на рассылку</p>
+        <button type="button" class="close bg-danger" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/*диалог подписаться, в момент открытия загружается форма*/
+$('#subsModal').on('show.bs.modal', function (event) {
+  $(this).find('.modal-body').load("/subs");
+})
+</script>
+```
+
+3 - разумеется все библиотеки bootstrap4 должны быть подключены

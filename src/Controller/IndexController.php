@@ -1,15 +1,13 @@
 <?php
 /**
-контроллер работы со статичными страницами
-
- */
+* контроллер работы с страницей контакты + форма
+*/
 
 namespace Mf\Kontakt\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Exception;
-//use Mf\Kontakt\Form\KontaktForm;
 use Zend\Captcha;
 use Zend\Mail;
 use Zend\Http\PhpEnvironment\Response;
@@ -26,11 +24,12 @@ class IndexController extends AbstractActionController
     protected $locale_default;
     protected $email_robot;
     protected $admin_emails=[];
+    protected $enable;
 
 public function __construct ($config,$translator)
 {
 
-    $this->config=$config["kontakt"];
+    $this->config=$config["kontakt"]["categories"]["kontakt_page"];
     $this->translator=$translator;
     $options=$config["captcha"]["options"][$config["captcha"]["adapter"]];
     $captcha= "\\".$config["captcha"]["adapter"];
@@ -39,6 +38,7 @@ public function __construct ($config,$translator)
     $this->locale_default=$config["locale_default"];
     $this->email_robot=$config["email_robot"];
     $this->admin_emails=$config["admin_emails"];
+    $this->enable=$config["kontakt"]["enables"]["kontakt_page"];
 }
 
 
@@ -47,6 +47,9 @@ public function indexAction()
   $locale=$this->params('locale',$this->locale_default);
 
   try {
+      if (!$this->enable){
+          throw new  Exception("kontakt_page запрещен к использованию в конфиге");
+      }
 
     $prg = $this->prg();
     if ($prg instanceof Response) {
@@ -59,6 +62,10 @@ public function indexAction()
 
     $view=new ViewModel();
     $view->setTemplate($this->config["tpl"]["index"]);
+    if ($this->config["layout"]){
+        $this->layout($this->config["layout"]);
+    }
+
     
     $factory = new Factory();
     $form    = $factory->createForm(include $this->config["forma"]);
@@ -85,7 +92,7 @@ public function indexAction()
                 if (in_array($k,['captcha','security',"submit"])){continue;}
                 $mess.=$f->getLabel();
                 $mess.=": ".$info[$f->getName()];
-                $mess.= "<br>\n";
+                $mess.= "\n";
             }
             //отправляем на почту сообщение, запрещаем пересылать URL
             if (mb_strpos($mess,"://",0,"UTF-8")===false){
