@@ -97,7 +97,9 @@ return [
 
 Сценарий вывода форм использует bootstrap4, при необходимости используйте свои, указав в сценарии имена в формате Zend
 Для работы со всплыващими окнами:
+
 1 - подключите в макете файл jquery.form.min.js для обрабоки асинхронных запросов
+
 2 - ипользуйте диалоги bootstrap4:
 ```HTML
 <button class="btn btn-primary subs mt-2 btn-sm" data-toggle="modal" data-target="#subsModal">Подписаться на рассылку</button>
