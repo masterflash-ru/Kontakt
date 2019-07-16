@@ -108,8 +108,8 @@ return [
         ],
       "enables"=>[ 
           "kontakt_page"=>true,
-          "subs"        =>true,
-          "call"        =>true
+          "subs"        =>false,
+          "call"        =>false,
       ],
   ],
 
