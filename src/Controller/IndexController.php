@@ -9,7 +9,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Exception;
 use Zend\Captcha;
-use Zend\Mail;
 use Zend\Http\PhpEnvironment\Response;
 use Locale;
 use Zend\Form\Factory;
@@ -87,23 +86,18 @@ public function indexAction()
         //данные в норме
         $info=$form->getData();
         if ($_SERVER["REQUEST_TIME"]-$_SESSION["_kontakt_form_"] > 10) {
-            $mess="Сообщение с сайта:\n\n";
+            $mess="Сообщение с сайта:<br><br>\n\n";
             foreach ($form as $k=>$f){
                 if (in_array($k,['captcha','security',"submit"])){continue;}
                 $mess.=$f->getLabel();
                 $mess.=": ".$info[$f->getName()];
-                $mess.= "\n";
+                $mess.= "<br>\n";
             }
             //отправляем на почту сообщение, запрещаем пересылать URL
             if (mb_strpos($mess,"://",0,"UTF-8")===false){
-                $mail = new Mail\Message();
-                $mail->setEncoding("UTF-8");
-                $mail->setBody($mess);
-                $mail->setFrom($this->email_robot);
-                $mail->addTo($this->admin_emails);
-                $mail->setSubject("Сообщение с сайта (из контактов) ".$_SERVER["SERVER_NAME"]);
-                $transport = new Mail\Transport\Sendmail();
-                $transport->send($mail);
+                $v=new ViewModel(["message"=>$mess]);
+                $v->setTemplate("kontakt/emailer/index");
+                $this->Emailer($v,null, $this->admin_emails, ["mailfrom"=>$this->email_robot,"subject"=>"Сообщение с сайта (из контактов) ".$_SERVER["SERVER_NAME"]]);
             }
         }
         

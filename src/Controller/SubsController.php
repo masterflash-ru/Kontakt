@@ -6,14 +6,10 @@ namespace Mf\Kontakt\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Tovar;
+
 use ADO\Service\RecordSet;
 use ADO\Service\Command;
 use Locale;
-use Zend\Mail;
-use Zend\Mime\Message as MimeMessage;
-use Zend\Mime\Mime;
-use Zend\Mime\Part as MimePart;
 use Zend\Form\Factory;
 use Exception;
 use Zend\Validator\AbstractValidator;
@@ -91,22 +87,16 @@ public function indexAction()
                 $data = $form->getData();
                 $view->setTemplate($this->config["tpl"]["ok"]);
 
-                $mess="Сообщение с сайта (подписка):\n\n";
+                $mess="Сообщение с сайта (подписка):<br><br>\n\n";
                 foreach ($form as $k=>$f){
                     if (in_array($k,['captcha','security',"submit"])){continue;}
                     $mess.=$f->getLabel();
                     $mess.=": ".$data[$f->getName()];
-                    $mess.= "\n";
+                    $mess.= "<br>\n";
                 }
-
-                $mail = new Mail\Message();
-                $mail->setEncoding("UTF-8");
-                $mail->setBody($mess);
-                $mail->setFrom($this->email_robot);
-                $mail->addTo($this->admin_emails);
-                $mail->setSubject("Сообщение с сайта (подписка на рассылку) ".$_SERVER["SERVER_NAME"]);
-                $transport = new Mail\Transport\Sendmail();
-                $transport->send($mail);
+                $v=new ViewModel(["message"=>$mess]);
+                $v->setTemplate("kontakt/emailer/index");
+                $this->Emailer($v,null, $this->admin_emails, ["mailfrom"=>$this->email_robot,"subject"=>"Сообщение с сайта (подписка на рассылку) ".$_SERVER["SERVER_NAME"]]);
             } 
 
             $view->setVariables(["form"=>$form,"locale"=>$locale]);
