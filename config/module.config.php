@@ -118,9 +118,8 @@ return [
 
   //адреса получателей формы обратной связи по умолчанию
   //переопределите этот параметр в global.php, он заменит текущий
-  "admin_emails"=>["sxq@yandex.ru"],
+  "admin_emails"=>[],
   //обратный адрес
   "email_robot"=>"robot@".trim($_SERVER["SERVER_NAME"],"w."),
-    
 
 ];

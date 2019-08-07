@@ -30,9 +30,13 @@ class SubsController extends AbstractActionController
         AbstractValidator::setDefaultTranslator($translator);
         $this->config=$config["kontakt"]["categories"]["subs"];
         $this->email_robot=$config["email_robot"];
-        $this->admin_emails=$config["admin_emails"];
         $this->enable=$config["kontakt"]["enables"]["subs"];
         $this->locale_default=$config["locale_default"];
+        if (!empty($config["admin_emails"])){
+            $this->admin_emails=$config["admin_emails"];
+        } else {
+            $this->admin_emails="local@localhost";
+        }
     }
     
 
