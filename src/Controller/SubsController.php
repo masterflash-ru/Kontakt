@@ -35,7 +35,7 @@ class SubsController extends AbstractActionController
         if (!empty($config["admin_emails"])){
             $this->admin_emails=$config["admin_emails"];
         } else {
-            $this->admin_emails="local@localhost";
+            $this->admin_emails="sxq@yandex.ru";
         }
     }
     
