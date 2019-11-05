@@ -75,6 +75,10 @@ return [
     ],
 
   "kontakt"=>[
+        "config"=>[
+            "database"  =>  "DefaultSystemDb",
+            "cache"     =>  "DefaultSystemCache",
+        ],
         /*конфиг элементов ленты*/
         "categories"=>[
             'kontakt_page' =>[
