@@ -94,7 +94,11 @@ public function indexAction()
                 foreach ($form as $k=>$f){
                     if (in_array($k,['captcha','security',"submit"])){continue;}
                     $mess.=$f->getLabel();
-                    $mess.=": ".$data[$f->getName()];
+                    $v=$data[$f->getName()];
+                    if (is_array($v)){
+                        $v=implode(", ",$v);
+                    }
+                    $mess.=": ".$v;
                     $mess.= "<br>\n";
                 }
                 $v=new ViewModel(["message"=>$mess]);
