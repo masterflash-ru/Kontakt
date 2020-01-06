@@ -4,8 +4,8 @@
 
 namespace Mf\Kontakt;
 
-use Zend\Mvc\MvcEvent;
-use Zend\EventManager\Event;
+use Laminas\Mvc\MvcEvent;
+use Laminas\EventManager\Event;
 
 use Mf\Kontakt\Service\GetControllersInfo;
 use Mf\Kontakt\Service\GetMap;

@@ -2,14 +2,14 @@
 /**
  * конфигурация формы контактов
  * для изменения создайте новую конфигурацию по аналогии см. https://docs.zendframework.com/zend-form/quick-start/#creation-via-factory
- * создается при помощи фабрики Zend
+ * создается при помощи фабрики Laminas
  */
 
 namespace Mf\ Kontakt;
-use Zend\Form\Element;
-use Zend\Form\Factory;
-use Zend\Hydrator\ArraySerializable;
-use Zend\Validator\Hostname;
+use Laminas\Form\Element;
+use Laminas\Form\Factory;
+use Laminas\Hydrator\ArraySerializable;
+use Laminas\Validator\Hostname;
 
 
 return [

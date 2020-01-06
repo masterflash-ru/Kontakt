@@ -5,7 +5,7 @@
 
 namespace Mf\Kontakt;
 
-use Zend\Router\Http\Literal;
+use Laminas\Router\Http\Literal;
 
 /*
  для работы с мультиязычными сайтами, дополните в глобальной конфигурации новые маршруты по примеру:

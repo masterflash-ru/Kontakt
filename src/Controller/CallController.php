@@ -4,14 +4,14 @@
 
 namespace Mf\Kontakt\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use ADO\Service\RecordSet;
 use ADO\Service\Command;
 use Locale;
-use Zend\Form\Factory;
+use Laminas\Form\Factory;
 use Exception;
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 
 class CallController extends AbstractActionController

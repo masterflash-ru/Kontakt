@@ -2,9 +2,9 @@
 namespace Mf\Kontakt\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-use Zend\Validator\Translator\TranslatorInterface;
+use Laminas\Validator\Translator\TranslatorInterface;
 
 
 /**

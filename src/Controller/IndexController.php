@@ -5,14 +5,14 @@
 
 namespace Mf\Kontakt\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use Exception;
-use Zend\Captcha;
-use Zend\Http\PhpEnvironment\Response;
+use Laminas\Captcha;
+use Laminas\Http\PhpEnvironment\Response;
 use Locale;
-use Zend\Form\Factory;
-use Zend\Validator\AbstractValidator;
+use Laminas\Form\Factory;
+use Laminas\Validator\AbstractValidator;
 
 class IndexController extends AbstractActionController
 {

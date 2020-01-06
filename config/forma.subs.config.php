@@ -1,12 +1,12 @@
 <?php
 /**
  * конфигурация формы
- * создается при помощи фабрики Zend
+ * создается при помощи фабрики Laminas
  */
 
 namespace Mf\Kontakt;
-use Zend\Form\Element;
-use Zend\Validator\Hostname;
+use Laminas\Form\Element;
+use Laminas\Validator\Hostname;
 
 return [
     'elements' => [
