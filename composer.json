@@ -24,6 +24,7 @@
         "masterflash-ru/emailer": "*",
         "laminas/laminas-form": "^2.10",
         "laminas/laminas-captcha": "^2.7",
+        "laminas/laminas-recaptcha": "^3.2",
         "laminas/laminas-mvc-plugin-prg": "^1.0"
     },
     "autoload": {
