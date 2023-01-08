@@ -19,7 +19,7 @@
         "laminas/laminas-router": "*",
         "laminas/laminas-inputfilter": "*",
         "laminas/laminas-i18n": "*",
-        "masterflash-ru/validator_i18n": "*,
+        "masterflash-ru/validator_i18n": "*",
         "masterflash-ru/statpage": "*",
         "masterflash-ru/emailer": "*",
         "laminas/laminas-form": "*",
